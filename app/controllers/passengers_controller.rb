@@ -4,4 +4,5 @@ class PassengersController < ApplicationController
     @passengers = Passenger.all
   end
 
+
 end

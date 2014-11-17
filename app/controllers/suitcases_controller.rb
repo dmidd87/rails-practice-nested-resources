@@ -2,13 +2,14 @@ class SuitcasesController < ApplicationController
 
   before_action do
     @passenger = Passenger.find(params[:passenger_id])
+  end
 
   def index
     @suitcases = @passenger.suitcases
   end
 
   def show
-    @suitcase = Suitcase.find(params[:id])
+    @suitcase = @passenger.suitcases.find(params[:id])
   end
 
   def new
@@ -18,7 +19,7 @@ class SuitcasesController < ApplicationController
   def create
     @suitcase = @passenger.suitcases.new(suitcase_params)
     if @suitcase.save
-      redirect_to suitcase_path(@suitcase)
+      redirect_to passenger_suitcase_path(@passenger, @suitcase)
     else
       render :new
     end
@@ -31,16 +32,16 @@ class SuitcasesController < ApplicationController
   def update
     @suitcase = Suitcase.find(params[:id])
     if @suitcase.update(suitcase_params)
-      redirect_to suitcase_path(@suitcase)
+      redirect_to passenger_suitcase_path(@passenger,@suitcase)
     else
       render :edit
     end
   end
 
   def destroy
-    @suitcase = Suitcase.find(params[:id])
+    @suitcase = @passenger.suitcases.find(params[:id])
     @suitcase.destroy
-    redirect_to suitcases_path
+    redirect_to passenger_suitcases_path(@passenger)
   end
 
   private
